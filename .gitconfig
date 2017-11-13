@@ -1,0 +1,12 @@
+[user]
+        email = jonathan.huot@thomsonreuters.com
+        name = Jonathan Huot
+[push]
+        default = simple
+[pull]
+        rebase = true
+[rebase]
+        autoStash = true
+[alias]
+        st = status
+        stu = status --untracked-files=no
