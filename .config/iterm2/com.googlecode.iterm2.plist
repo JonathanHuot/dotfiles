@@ -143,9 +143,9 @@
 		<string>@~^w</string>
 	</dict>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>78 511 918 512 0 0 1920 1057 </string>
+	<string>398 372 796 473 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 214 782 843 0 0 1920 1057 </string>
+	<string>958 76 957 977 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>963 520 782 537 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -461,9 +461,9 @@
 				<key>0x61-0x100000</key>
 				<dict>
 					<key>Action</key>
-					<integer>10</integer>
+					<integer>11</integer>
 					<key>Text</key>
-					<string>a</string>
+					<string>0x01</string>
 				</dict>
 				<key>0x62-0x100000</key>
 				<dict>
@@ -475,9 +475,9 @@
 				<key>0x65-0x100000</key>
 				<dict>
 					<key>Action</key>
-					<integer>10</integer>
+					<integer>11</integer>
 					<key>Text</key>
-					<string>e</string>
+					<string>0x05</string>
 				</dict>
 				<key>0x66-0x100000</key>
 				<dict>
@@ -486,12 +486,26 @@
 					<key>Text</key>
 					<string>f</string>
 				</dict>
+				<key>0x6c-0x100000</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Text</key>
+					<string>l</string>
+				</dict>
 				<key>0x6e-0x40000</key>
 				<dict>
 					<key>Action</key>
 					<integer>1</integer>
 					<key>Text</key>
 					<string></string>
+				</dict>
+				<key>0x75-0x100000</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Text</key>
+					<string>u</string>
 				</dict>
 				<key>0x7f-0x100000</key>
 				<dict>
@@ -527,6 +541,20 @@
 					<integer>10</integer>
 					<key>Text</key>
 					<string>f</string>
+				</dict>
+				<key>0xf728-0x100000</key>
+				<dict>
+					<key>Action</key>
+					<integer>11</integer>
+					<key>Text</key>
+					<string>0x01b 0x64</string>
+				</dict>
+				<key>0xf728-0x40000</key>
+				<dict>
+					<key>Action</key>
+					<integer>11</integer>
+					<key>Text</key>
+					<string>0x01b 0x64</string>
 				</dict>
 			</dict>
 			<key>Link Color</key>
@@ -590,6 +618,8 @@
 			<integer>30</integer>
 			<key>Shortcut</key>
 			<string></string>
+			<key>Show Mark Indicators</key>
+			<false/>
 			<key>Silence Bell</key>
 			<true/>
 			<key>Sync Title</key>
