@@ -12,6 +12,8 @@ Another combination of workstation
 ```
 vcsh clone -b git-tr https://JonathanHuot@github.com/JonathanHuot/dotfiles.git git-tr
 vcsh clone -b bash-tr https://JonathanHuot@github.com/JonathanHuot/dotfiles.git git-tr
+vcsh clone -b emacs https://JonathanHuot@github.com/JonathanHuot/dotfiles.git emacs
+vcsh clone -b iterm2 https://JonathanHuot@github.com/JonathanHuot/dotfiles.git iterm2
 ```
 
 Howto create new repo
