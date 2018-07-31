@@ -2,6 +2,30 @@
   "title": "Jo PC Shortcuts (w/FR Layout)",
   "rules": [
     {
+      "description": "Special handling to have shortcut left_control+5 works as it was option+5",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "5",
+            "modifiers": {
+              "mandatory": [
+                "left_option"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "5",
+              "modifiers": [
+                "left_control"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "description": "Home key to the beginning of the line (Control + a)",
       "manipulators": [
         {
