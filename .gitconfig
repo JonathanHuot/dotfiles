@@ -8,5 +8,23 @@
 [rebase]
         autoStash = true
 [alias]
+        b = branch
+        c = checkout
+        co = checkout
+        ci = commit
+        r = reset
+        s = status
         st = status
-        stu = status --untracked-files=no
+        sh = show
+        d = diff
+        l = log
+[credential]
+	helper = osxkeychain
+[merge]
+	tool = p4mergetool
+[mergetool]
+  prompt = false
+  keepBackup = false
+[mergetool "p4mergetool"]
+	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $PWD/$BASE $PWD/$LOCAL $PWD/$REMOTE $PWD/$MERGED
+	trustExitCode = false
