@@ -56,7 +56,9 @@
 
   ;; Fill column
   (make-local-variable 'fill-column)
-  (setq fill-column 74))
+  (setq fill-column 79))
+
+(setq-default fill-column 80)
 
 (defun des-programming-keys ()
   (local-set-key "\C-m" 'newline-and-indent)
@@ -255,4 +257,27 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (elpy jedi dockerfile-mode markdown-mode org js2-mode yaml-mode vcl-mode puppet-mode php-mode magit haml-mode groovy-mode flymake-php color-theme cmake-mode auto-complete-c-headers))))
+    (graphviz-dot-mode tox elpy jedi dockerfile-mode markdown-mode org js2-mode yaml-mode vcl-mode puppet-mode php-mode magit haml-mode groovy-mode flymake-php color-theme cmake-mode auto-complete-c-headers))))
+
+(when (eq system-type 'darwin)
+  (setq x-alt-keysym 'meta)
+  (setq mac-option-modifier nil  ;; if not set, special chars "option+(" => {[ are broken
+      mac-command-modifier 'meta
+      x-select-enable-clipboard t)
+
+  ;; enable copy-paste in clipboard when in terminal
+  (defun copy-from-osx ()
+    (shell-command-to-string "pbpaste"))
+
+  (defun paste-to-osx (text &optional push)
+    (let ((process-connection-type nil))
+      (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+        (process-send-string proc text)
+        (process-send-eof proc))))
+
+  (setq interprogram-cut-function 'paste-to-osx)
+  (setq interprogram-paste-function 'copy-from-osx)
+
+  ;; enable emacs region (selection) to be pasted in mac osx clipboard
+  (setq mouse-drag-copy-region t)
+)
