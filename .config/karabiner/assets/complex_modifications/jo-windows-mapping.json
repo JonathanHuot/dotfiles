@@ -2,6 +2,31 @@
   "title": "Jo PC Shortcuts (w/FR Layout)",
   "rules": [
     {
+      "description": "Option-Shift-Space must print Space, and not unbreakable-Space",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "spacebar",
+            "modifiers": {
+              "mandatory": [
+                "option",
+                "shift"
+              ],
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "spacebar"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "description": "Special handling to have shortcut left_control+5 works as it was option+5",
       "manipulators": [
         {
