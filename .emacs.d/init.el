@@ -21,21 +21,74 @@
 (setq mouse-buffer-menu-mode-mult 20)
 
 
-;;; This was installed by package-install.el.
-;;; This provides support for the package system and
-;;; interfacing with ELPA, the package archive.
-;;; Move this code earlier if you want to reference
-;;; packages in your .emacs.
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (package-initialize)
-  (expand-file-name "~/.emacs.d/elpa/package.el")
-  (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                           ("marmalade" . "https://marmalade-repo.org/packages/")
-                           ("melpa-stable" . "https://stable.melpa.org/packages/"))
+(require 'package)
+(add-to-list 'package-archives
+             '("MELPA Stable" . "http://stable.melpa.org/packages/") t)
+(package-initialize)
+(when (not package-archive-contents)
+  (package-refresh-contents))
+
+
+;; elpy requirements:
+;; pip install flake8 pylint mypy
+;; flycheck requirements:
+;; pip install autopep8 jedi
+
+;; Installs packages
+;;
+;; myPackages contains a list of package names
+(defvar myPackages
+  '(
+    exec-path-from-shell
+    elpy
+    flycheck
+    py-autopep8
+    magit
+    jedi
+    material-theme
+    cmake-mode
+    dockerfile-mode
+    graphviz-dot-mode
+    groovy-mode
+    markdown-mode
+    puppet-mode
+    vcl-mode
+    yaml-mode
+    )
   )
-)
+
+;; Scans the list in myPackages
+;; If the package listed is not already installed, install it
+(mapc #'(lambda (package)
+          (unless (package-installed-p package)
+            (package-install package)))
+      myPackages)
 ;; 
+
+;; python
+(exec-path-from-shell-initialize)
+(global-flycheck-mode)
+(elpy-enable)
+
+;; Replace flymake with flycheck
+(global-flycheck-mode)
+(when (require 'flycheck nil t)
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-hook 'elpy-mode-hook 'flycheck-mode))
+
+;; Enable autopep8
+;;(require 'py-autopep8)
+;;(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+
+;; tweak M-. to goto definition
+(defun elpy-goto-definition-or-rgrep ()
+  "Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'."
+    (interactive)
+    (ring-insert find-tag-marker-ring (point-marker))
+    (condition-case nil (elpy-goto-definition)
+        (error (elpy-rgrep-symbol
+                (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
+(define-key elpy-mode-map (kbd "M-.") 'elpy-goto-definition-or-rgrep)
 
 ;; varnish style
 (defun des-knf ()
@@ -217,48 +270,6 @@
 (global-set-key [(f9)] 'add-py-debug)
 
 
-;; alternative to C-x C-w
-(defun rename-current-buffer-file ()
-  "Renames current buffer and file it is visiting."
-  (interactive)
-  (let ((name (buffer-name))
-        (filename (buffer-file-name)))
-    (if (not (and filename (file-exists-p filename)))
-        (error "Buffer '%s' is not visiting a file!" name)
-      (let ((new-name (read-file-name "New name: " filename)))
-        (if (get-buffer new-name)
-            (error "A buffer named '%s' already exists!" new-name)
-          (rename-file filename new-name 1)
-          (rename-buffer new-name)
-          (set-visited-file-name new-name)
-          (set-buffer-modified-p nil)
-          (message "File '%s' successfully renamed to '%s'"
-                   name (file-name-nondirectory new-name)))))))
-
-
-;; elpa
-(elpy-enable)
-(defvar myPackages
-  '(better-defaults
-    elpy
-    flycheck ;; add the flycheck package
-    material-theme))
-
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-
-(global-set-key (kbd "C-x C-r") 'rename-current-buffer-file)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (graphviz-dot-mode tox elpy jedi dockerfile-mode markdown-mode org js2-mode yaml-mode vcl-mode puppet-mode php-mode magit haml-mode groovy-mode flymake-php color-theme cmake-mode auto-complete-c-headers))))
-
 (when (eq system-type 'darwin)
   (setq x-alt-keysym 'meta)
   (setq mac-option-modifier nil  ;; if not set, special chars "option+(" => {[ are broken
@@ -281,3 +292,11 @@
   ;; enable emacs region (selection) to be pasted in mac osx clipboard
   (setq mouse-drag-copy-region t)
 )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (exec-path-from-shell yaml-mode vcl-mode tox py-autopep8 puppet-mode php-mode org material-theme markdown-mode magit js2-mode jedi haml-mode groovy-mode graphviz-dot-mode flymake-php flycheck elpy dockerfile-mode color-theme cmake-mode blacken better-defaults auto-complete-c-headers))))
