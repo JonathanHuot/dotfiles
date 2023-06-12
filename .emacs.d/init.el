@@ -1,3 +1,7 @@
+;; my init
+
+(setq byte-compile-warnings '(cl-functions))
+
 ;; mine :
 ;; keybinding
 (global-set-key [(meta g)] 'goto-line)
@@ -8,9 +12,12 @@
 ;; Set cursor and mouse-pointer colours
 (set-cursor-color "red")
 (set-mouse-color "goldenrod")
-(setq mouse-wheel-scroll-amount '(4))
-(setq mouse-wheel-progressive-speed nil)
-(mwheel-install)
+
+(setq-default
+ mouse-wheel-scroll-amount '(4 ((shift) 10) ((control) . nil))
+ mouse-wheel-progressive-speed nil)
+
+(setq-default smooth-scroll-margin 1)
 
 
  ;; "ctrl - left click" buffer menu: increase number of items shown
@@ -24,15 +31,11 @@
 (require 'package)
 (add-to-list 'package-archives
              '("MELPA Stable" . "http://stable.melpa.org/packages/") t)
+;;(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 (package-initialize)
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-
-;; elpy requirements:
-;; pip install flake8 pylint mypy
-;; flycheck requirements:
-;; pip install autopep8 jedi
 
 ;; Installs packages
 ;;
@@ -65,30 +68,20 @@
       myPackages)
 ;; 
 
-;; python
-(exec-path-from-shell-initialize)
-(global-flycheck-mode)
-(elpy-enable)
+;; external files:
+(load "~/.emacs.d/python.el")
+(load "~/.emacs.d/orgsetup.el")
+(load "~/.emacs.d/markdown.el")
 
-;; Replace flymake with flycheck
-(global-flycheck-mode)
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
+;; debug python:
+(defun add-py-debug ()  
+      "add debug code and move line down"  
+    (interactive)  
+    (move-beginning-of-line 1)  
+    (insert "import pdb; pdb.set_trace();\n"))  
 
-;; Enable autopep8
-;;(require 'py-autopep8)
-;;(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+(global-set-key [(f9)] 'add-py-debug)
 
-;; tweak M-. to goto definition
-(defun elpy-goto-definition-or-rgrep ()
-  "Go to the definition of the symbol at point, if found. Otherwise, run `elpy-rgrep-symbol'."
-    (interactive)
-    (ring-insert find-tag-marker-ring (point-marker))
-    (condition-case nil (elpy-goto-definition)
-        (error (elpy-rgrep-symbol
-                (concat "\\(def\\|class\\)\s" (thing-at-point 'symbol) "(")))))
-(define-key elpy-mode-map (kbd "M-.") 'elpy-goto-definition-or-rgrep)
 
 ;; varnish style
 (defun des-knf ()
@@ -224,7 +217,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:overline nil :inherit nil :stipple nil :background "#242424" :foreground "#FFF991" :inverse-video nil :box nil :strike-through nil :underline nil :foundry "unknown" :family "DejaVu Sans Mono"))))
+ '(default ((t (:overline nil :inherit nil :stipple nil :background "#242424" :foreground "#FFF991" :inverse-video nil :box nil :strike-through nil :underline nil :foundry "nil" :family "DejaVu Sans Mono" :slant normal :weight semi-light :height 120 :width normal))))
  '(border ((t nil)))
  '(cursor ((t (:background "firebrick1" :foreground "black"))))
  '(font-lock-comment-delimiter-face ((default (:inherit font-lock-comment-face :weight ultra-bold)) (((class color) (min-colors 16)) nil)))
@@ -260,15 +253,6 @@
 (add-to-list 'ac-sources 'ac-source-c-headers)
 
 
-;; debug python:
-(defun add-py-debug ()  
-      "add debug code and move line down"  
-    (interactive)  
-    (move-beginning-of-line 1)  
-    (insert "import pdb; pdb.set_trace();\n"))  
-
-(global-set-key [(f9)] 'add-py-debug)
-
 
 (when (eq system-type 'darwin)
   (setq x-alt-keysym 'meta)
@@ -297,6 +281,23 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
  '(package-selected-packages
-   (quote
-    (exec-path-from-shell yaml-mode vcl-mode tox py-autopep8 puppet-mode php-mode org material-theme markdown-mode magit js2-mode jedi haml-mode groovy-mode graphviz-dot-mode flymake-php flycheck elpy dockerfile-mode color-theme cmake-mode blacken better-defaults auto-complete-c-headers))))
+   '(hcl-mode plantuml-mode rnc-mode rfc-mode python-isort python-black lsp-ui lsp-mode org-contrib org-jira org-download elpy exec-path-from-shell yaml-mode vcl-mode tox py-autopep8 puppet-mode php-mode org material-theme markdown-mode magit js2-mode jedi haml-mode groovy-mode graphviz-dot-mode flymake-php flycheck dockerfile-mode color-theme cmake-mode blacken better-defaults auto-complete-c-headers))
+ '(show-paren-mode t))
+
+
+(setq
+   backup-by-copying t      ; don't clobber symlinks
+   backup-directory-alist
+    '(("." . "~/.backup/"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)       ; use versioned backups
+
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+
+;; 
