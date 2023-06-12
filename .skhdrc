@@ -1,9 +1,18 @@
+#lalt - return : ~/bin/newterm.sh
 lalt - return : open -na /Applications/iTerm.app && osascript $HOME/.iterm2_newwindow.scpt
 lalt - e : open -na /Applications/Emacs.app
-lalt - d : open -na /Applications/Firefox.app
+#lalt - d : open -na /Applications/Firefox.app
+lalt - d : open -na /Applications/Google\ Chrome.app
+lalt + shift - d : open -na /Applications/Chromium.app
 
 lshift + lalt - r: launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+lshift + lalt + lctrl - r: yabairestart.sh
+#lshift + lalt - t: brew services reload cmacrae/formulae/spacebar
+lshift + lalt - q: yabai -m window --toggle float
+lshift + lalt - a: yabai -m config --space $(yabai -m query --spaces --space|\jq -r .index) layout $(yabai -m query --spaces --space |jq -r 'if .type|contains("float") then "bsp" else "float" end')
 lshift + lalt - space: yabai -m space --balance
+lshift + lalt - u: open -a Übersicht.app 
+lshift + lalt - l: landscape
 
 lalt - f: yabai -m window --toggle zoom-fullscreen
 lalt - s: yabai -m window --toggle topmost
@@ -37,12 +46,31 @@ lalt + lshift - 0x17: yabai -m window --space 5
 lalt + lshift - 0x16: yabai -m window --space 6
 lalt + lshift - 0x1A: yabai -m window --space 7
 lalt + lshift - 0x1C: yabai -m window --space 8
+lalt + lshift - 0x19: yabai -m window --space 9
+lalt + lshift - 0x1D: yabai -m window --space 10
 
-lalt - 0x12: yabai -m space --focus 1
-lalt - 0x13: yabai -m space --focus 2
-lalt - 0x14: yabai -m space --focus 3
-lalt - 0x15: yabai -m space --focus 4
-lalt - 0x17: yabai -m space --focus 5
-lalt - 0x16: yabai -m space --focus 6
-lalt - 0x1A: yabai -m space --focus 7
-lalt - 0x1C: yabai -m space --focus 8
+#lalt + lshift - 1: yabai -m window --space 1
+#lalt + lshift - 2: yabai -m window --space 2
+#lalt + lshift - 3: yabai -m window --space 3
+#lalt + lshift - 4: yabai -m window --space 4
+#lalt + lshift - 5: yabai -m window --space 5
+#lalt + lshift - 6: yabai -m window --space 6
+#lalt + lshift - 7: yabai -m window --space 7
+#lalt + lshift - 8: yabai -m window --space 8
+#lalt + lshift - 9: yabai -m window --space 9
+#lalt + lshift - 0: yabai -m window --space 10
+
+
+#lalt + lshift - left : yabai -m space --focus prev
+#lalt + lshift - right : yabai -m space --focus next 
+
+#lalt - 0x12: yabai -m space --focus 1
+#lalt - 0x13: yabai -m space --focus 2
+#lalt - 0x14: yabai -m space --focus 3
+#lalt - 0x15: yabai -m space --focus 4
+#lalt - 0x17: yabai -m space --focus 5
+#lalt - 0x16: yabai -m space --focus 6
+#lalt - 0x1A: yabai -m space --focus 7
+#lalt - 0x1C: yabai -m space --focus 8
+#lalt - 0x19: yabai -m space --focus 9
+##lalt - 0x1D: yabai -m space --focus 10 
