@@ -1,0 +1,4 @@
+xss-lock --transfer-sleep-lock -- i3lock -c 006600 &
+[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
+synology-cloud-station-drive &
+nohup mons -a > /dev/null 2>&1 &

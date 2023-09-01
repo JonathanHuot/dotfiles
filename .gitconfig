@@ -1,0 +1,14 @@
+[user]
+	email = jonathan.huot@gmail.com
+	name = Jonathan Huot
+[alias]
+        b = branch
+        c = checkout
+        co = checkout
+        ci = commit
+        r = reset
+        s = status -sb
+	su = status -sb --untracked-files=no
+        sh = show
+        d = diff
+        l = log

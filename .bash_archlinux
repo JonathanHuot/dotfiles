@@ -1,0 +1,32 @@
+
+export TERMINAL=urxvt
+export BROWSER=firefox
+export TERM=xterm
+export EDITOR=vim
+
+alias hibernate='echo mem > /sys/power/state'
+alias mplayer='mplayer -mixer-channel Master'
+alias snapshot='import capture.png'
+function nmcli-help
+{
+    cat <<EOF
+nmcli device wifi list
+nmcli device wifi connect <name> password <password>
+nmcli con up id <name_wifi>
+nmcli con down id <name_wifi>
+
+# wifi down
+nmcli device disconnect wlp3s0
+EOF
+    }
+alias nmcli-list='nmcli device wifi list'
+alias image-viewer='sxiv || feh'
+
+function update-world {
+    echo "sudo pacman -Sy archlinux-keyring manjaro-keyring # refresh new keys"
+    echo "sudo pacman-key --refresh-keys # refresh all keys if previous fail"
+    echo "sudo pacman-key --populate archlinux manjaro"
+    echo "sudo pacman -Syu"
+    echo "sudo pacman -S --overwrite \"*\" packagename # in case some files already exists on filesystem"
+}
+alias pacman-world=update-world

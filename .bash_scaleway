@@ -1,0 +1,12 @@
+export SCW_SECRET_TOKEN=$(cat $HOME/.scalewaytoken)
+export REGION=fr-par
+export CLUSTER=78dc278b-17ec-4778-8023-d5984fb7ecce
+
+function docker_login_scaleway
+{
+    docker login rg.fr-par.scw.cloud/jonathanhuot -u nologin -p $SCW_SECRET_TOKEN
+}
+function curlscw
+{
+    curl -H "X-Auth-Token: $SCW_SECRET_TOKEN" $*
+}

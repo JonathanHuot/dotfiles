@@ -1,0 +1,62 @@
+shopt -s expand_aliases
+shopt -s histappend
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="~/usr/bin:~/bin:~/node_modules/.bin:$PATH"
+export PATH="$PATH:$HOME/.rvm/bin"
+#export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+#eval "$(pyenv init --path)"
+#eval "$(pyenv init -)"
+
+parse_git_branch() {
+    branch=$(git branch 2> /dev/null | awk '$0 ~ /^*/ {print $NF}')
+    if [[ "$branch" != "" ]]; then
+        echo "($branch) "
+    fi
+}
+
+parse_docker_machine() {
+    machine="$DOCKER_MACHINE_NAME"
+    if [[ "$machine" != "" ]]; then
+        echo '['$machine'] '
+    fi
+}
+
+if [[ ${EUID} == 0 ]] ; then
+    PS1='\[\e[31m\][\h\[\e[36m\] \W\[\e[31m\]]\$\[\033[00m\] '
+else
+    PS1='$(parse_git_branch)\[\e[32m\][\[\e[37m\]\w\[\e[32m\]]\[\e[0m\] \[\e[33m\]$(eval parse_docker_machine)\[\e[31m\]\$\[\e[0m\] '
+fi
+
+alias cp="cp -i"                          # confirm before overwriting something
+alias df='df -h'                          # human-readable sizes
+alias free='free -m'                      # show sizes in MB
+alias grep='grep --colour=auto'
+alias egrep='egrep --colour=auto'
+alias fgrep='fgrep --colour=auto'
+e() {
+    emacsclient -c -a emacs "$@" > /dev/null &
+    disown
+}
+
+alias vi=vim
+alias enw='e -nw'
+
+alias ls='ls -F --color -h'
+alias ll='ls -l'
+alias l='ls'
+alias top='top -U $USER'
+alias g='git'
+alias cleantildes='find . -name "*~" -exec rm -f \{\} \;'
+alias cleanpyc='find . -name "*.pyc" -exec rm -f \{\} \;'
+
+alias rand64="openssl rand -base64 128"
+alias randosap="</dev/urandom tr -dc 'A-Za-z0-9!\"#$%&()*+,-./:;<=>?@[\]^_{|}~' | head -c 30  ; echo"
+
+# see https://stackoverflow.com/questions/32723111/how-to-remove-old-and-unused-docker-images
+# see "docker system df"
+alias docker-clean-containers="docker container prune"
+
+alias encrypt="openssl enc -aes-256-cbc -a -iter 1000000 -salt"
+alias decrypt="openssl enc -d -aes-256-cbc -a -iter 1000000 -salt"
