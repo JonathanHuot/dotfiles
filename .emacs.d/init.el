@@ -46,6 +46,7 @@
     elpy
     flycheck
     py-autopep8
+    auto-complete
     magit
     jedi
     material-theme
@@ -55,8 +56,14 @@
     groovy-mode
     markdown-mode
     puppet-mode
+    php-mode
     vcl-mode
     yaml-mode
+    use-package
+    python-isort
+    python-black
+    org-download
+    flymake-php
     )
   )
 
@@ -205,12 +212,6 @@
 (show-paren-mode t)
 
 
-; use the "Subtle Hacker" color theme as a base for the custom scheme
-(require 'color-theme)
-(color-theme-initialize)
-(setq color-theme-is-global t)
-(color-theme-subtle-hacker)
-
 ;:background gray2
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -275,7 +276,9 @@
 
   ;; enable emacs region (selection) to be pasted in mac osx clipboard
   (setq mouse-drag-copy-region t)
-)
+  )
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -283,7 +286,7 @@
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(package-selected-packages
-   '(hcl-mode plantuml-mode rnc-mode rfc-mode python-isort python-black lsp-ui lsp-mode org-contrib org-jira org-download elpy exec-path-from-shell yaml-mode vcl-mode tox py-autopep8 puppet-mode php-mode org material-theme markdown-mode magit js2-mode jedi haml-mode groovy-mode graphviz-dot-mode flymake-php flycheck dockerfile-mode color-theme cmake-mode blacken better-defaults auto-complete-c-headers))
+   '(gitlab-ci-mode-flycheck gitlab-ci-mode terraform-mode hcl-mode plantuml-mode rnc-mode rfc-mode python-isort python-black lsp-ui lsp-mode org-contrib org-jira org-download elpy exec-path-from-shell yaml-mode vcl-mode tox py-autopep8 puppet-mode php-mode org material-theme markdown-mode magit js2-mode jedi haml-mode groovy-mode graphviz-dot-mode flymake-php flycheck dockerfile-mode color-theme cmake-mode blacken better-defaults auto-complete-c-headers))
  '(show-paren-mode t))
 
 
