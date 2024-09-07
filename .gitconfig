@@ -7,8 +7,8 @@
         co = checkout
         ci = commit
         r = reset
-        s = status -sb
-	su = status -sb --untracked-files=no
+        s = status
+	su = status --untracked-files=no
         sh = show
         d = diff
         l = log
