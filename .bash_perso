@@ -9,6 +9,9 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 #eval "$(pyenv init --path)"
 #eval "$(pyenv init -)"
 
+export PATH="$HOME/go/bin:$PATH"
+export GOROOT="$HOME/gousr"
+
 parse_git_branch() {
     branch=$(git branch 2> /dev/null | awk '$0 ~ /^*/ {print $NF}')
     if [[ "$branch" != "" ]]; then
